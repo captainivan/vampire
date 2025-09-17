@@ -73,6 +73,7 @@ const Page = ({ params }) => {
             setCount(prev => prev + 1);
             setClick(false);
             setNext(false);
+            setClickedOption("");
             if (messRef.current) messRef.current.style.display = "none";
 
             const nextQ = shuffledQuestions[count];
