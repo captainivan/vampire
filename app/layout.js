@@ -13,7 +13,7 @@ const geistMono = Geist_Mono({
 
 const cinzelDecorative = Cinzel_Decorative({
   variable: "--font-cinzel-deco",
-  weight: ["400", "700", "900"],  
+  weight: ["400", "700", "900"],
   subsets: ["latin"],
 });
 
@@ -23,9 +23,12 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
-  
+
   return (
     <html lang="en">
+      <head>
+        <script defer src="https://cloud.umami.is/script.js" data-website-id="df7efa7e-06dc-44c1-9aaf-2f73035bb0fd"></script>
+      </head>
       <body
         className={`${geistSans.variable} ${cinzelDecorative.variable} ${geistMono.variable} antialiased`}
       >
