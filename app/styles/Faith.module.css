@@ -1,0 +1,7 @@
+.story{
+    border: 4px solid white;
+    border-radius: 10px;
+}
+.font{
+    font-family: var(--font-cinzel-deco);
+}
