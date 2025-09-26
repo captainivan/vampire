@@ -28,7 +28,7 @@ const Page = ({ params }) => {
     const [shuffledQuestions, setShuffledQuestions] = useState([]);
     const scareRef = useRef(null);
     const scareRefTwo = useRef(null);
-    const router = useRouter()
+    const router = useRouter();
 
     // Shuffle util (Fisher–Yates)
     const shuffleArray = (array) => {
@@ -40,8 +40,20 @@ const Page = ({ params }) => {
         return newArr;
     };
 
+    // Shuffle options inside a question
+    const shuffleOptions = (options) => {
+        const newOptions = [...options];
+        for (let i = newOptions.length - 1; i > 0; i--) {
+            const j = Math.floor(Math.random() * (i + 1));
+            [newOptions[i], newOptions[j]] = [newOptions[j], newOptions[i]];
+        }
+        return newOptions;
+    };
+
     // Save params.id
-    useEffect(() => { const paData = async () => { const data = await params; if (data.id) { setData(data.id); } }; paData(); }, []);
+    useEffect(() => {
+        if (params?.id) setData(params.id);
+    }, [params]);
 
     // Random horror message on mount
     useEffect(() => {
@@ -60,7 +72,10 @@ const Page = ({ params }) => {
         if (data && questionData[data]) {
             const shuffled = shuffleArray(questionData[data]);
             setShuffledQuestions(shuffled);
-            setQuestion(shuffled[0]);
+            setQuestion({
+                ...shuffled[0],
+                options: shuffleOptions(shuffled[0].options),
+            });
             setCount(1);
         }
     }, [data]);
@@ -78,12 +93,18 @@ const Page = ({ params }) => {
 
             const nextQ = shuffledQuestions[count];
             if (nextQ) {
-                setQuestion(nextQ);
+                setQuestion({
+                    ...nextQ,
+                    options: shuffleOptions(nextQ.options),
+                });
             } else {
                 // reshuffle for extra randomness if needed
                 const reshuffled = shuffleArray(questionData[data]);
                 setShuffledQuestions(reshuffled);
-                setQuestion(reshuffled[0]);
+                setQuestion({
+                    ...reshuffled[0],
+                    options: shuffleOptions(reshuffled[0].options),
+                });
                 setCount(1);
             }
         } else {
@@ -96,11 +117,11 @@ const Page = ({ params }) => {
         if (endGame) {
             if (monsterScore > -8) {
                 router.push(`/faith/${data}?result=monsterwin`)
-            }else{
+            } else {
                 router.push(`/faith/${data}?result=monsterlose`)
             }
         }
-    }, [endGame]);
+    }, [endGame, monsterScore, data, router]);
 
     // Countdown
     useEffect(() => {
@@ -111,14 +132,6 @@ const Page = ({ params }) => {
             return () => clearTimeout(timer);
         }
     }, [startGame]);
-
-    useEffect(() => {
-        console.log(question)
-    }, [question])
-
-    useEffect(() => {
-        console.log(monsterScore)
-    }, [monsterScore])
 
     // Answer checking
     const checkAnswer = (option) => {
@@ -160,10 +173,8 @@ const Page = ({ params }) => {
                                         min={0}
                                         max={10}
                                         step={1}
-                                        rotNum={180}
                                         orientation="vertical"
                                         className={`${styles.slider} bg-cover bg-center`}
-                                        bgImage={imgData[data]?.og.src}
                                     />
                                 </div>
 
@@ -189,7 +200,7 @@ const Page = ({ params }) => {
                                     {/* Message bubble → always near monster */}
                                     <div
                                         ref={messRef}
-                                        className={`${startGame <= 5 && startGame > 1 ? "block" : "hidden"} bg-black border-2 border-white text-white px-4 py-2 rounded-2xl rounded-bl-none shadow-md absolute top-[10%] left-[58%] /* adjust positioning */ max-w-[250px] min-h-[50px] ${styles.animatepopup}`}
+                                        className={`${startGame <= 5 && startGame > 1 ? "block" : "hidden"} bg-black border-2 border-white text-white px-4 py-2 rounded-2xl rounded-bl-none shadow-md absolute top-[10%] left-[58%] max-w-[250px] min-h-[50px] ${styles.animatepopup}`}
                                     >
                                         {mess}
                                     </div>
