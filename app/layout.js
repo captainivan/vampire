@@ -28,6 +28,27 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <head>
         <script defer src="https://cloud.umami.is/script.js" data-website-id="df7efa7e-06dc-44c1-9aaf-2f73035bb0fd"></script>
+        <Script
+          src="https://cmp.gatekeeperconsent.com/min.js"
+          data-cfasync="false"
+          strategy="beforeInteractive"
+        />
+        <Script
+          src="https://the.gatekeeperconsent.com/cmp.min.js"
+          data-cfasync="false"
+          strategy="beforeInteractive"
+        />
+        <Script
+          async
+          src="//www.ezojs.com/ezoic/sa.min.js"
+          strategy="beforeInteractive"
+        />
+        <Script id="ezoic-standalone" strategy="beforeInteractive">
+          {`
+            window.ezstandalone = window.ezstandalone || {};
+            ezstandalone.cmd = ezstandalone.cmd || [];
+          `}
+        </Script>
       </head>
       <body
         className={`${geistSans.variable} ${cinzelDecorative.variable} ${geistMono.variable} antialiased`}
