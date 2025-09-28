@@ -28,6 +28,7 @@ export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <head>
+        <meta name="ezoic-site-verification" content="ol3YwAWpukLqOXhq6rx9BSjL8SPSmp" />
         <script defer src="https://cloud.umami.is/script.js" data-website-id="df7efa7e-06dc-44c1-9aaf-2f73035bb0fd"></script>
         <Script
           src="https://cmp.gatekeeperconsent.com/min.js"
