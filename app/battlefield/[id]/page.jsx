@@ -74,7 +74,7 @@ const Page = ({ params }) => {
             setShuffledQuestions(shuffled);
             setQuestion({
                 ...shuffled[0],
-                options: shuffleOptions(shuffled[0].options),
+                options: shuffleOptions(shuffled[0].options), // ✅ shuffle options
             });
             setCount(1);
         }
@@ -95,7 +95,7 @@ const Page = ({ params }) => {
             if (nextQ) {
                 setQuestion({
                     ...nextQ,
-                    options: shuffleOptions(nextQ.options),
+                    options: shuffleOptions(nextQ.options), // ✅ shuffle options every time
                 });
             } else {
                 // reshuffle for extra randomness if needed
@@ -103,7 +103,7 @@ const Page = ({ params }) => {
                 setShuffledQuestions(reshuffled);
                 setQuestion({
                     ...reshuffled[0],
-                    options: shuffleOptions(reshuffled[0].options),
+                    options: shuffleOptions(reshuffled[0].options), // ✅ shuffle options
                 });
                 setCount(1);
             }
