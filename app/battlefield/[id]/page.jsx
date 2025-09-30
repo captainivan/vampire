@@ -52,7 +52,11 @@ const Page = ({ params }) => {
 
     // Save params.id
     useEffect(() => {
-        if (params?.id) setData(params.id);
+        const pdata = async () => {
+            const par = await params;
+            setData(par.id)
+        }
+        pdata()
     }, [params]);
 
     // Random horror message on mount
@@ -170,12 +174,15 @@ const Page = ({ params }) => {
                                 <div className={`rotate-0 ${styles.bgSlider}`}>
                                     <Slider
                                         value={[sliderCount]}
+                                        onValueChange={(val) => setSliderCount(val[0])}
                                         min={0}
                                         max={10}
                                         step={1}
+                                        bgImage={imgData[data]?.og.src}
                                         orientation="vertical"
                                         className={`${styles.slider} bg-cover bg-center`}
                                     />
+
                                 </div>
 
                                 {/* Monster + Message */}
